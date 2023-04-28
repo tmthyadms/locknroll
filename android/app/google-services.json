@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "944341956905",
+    "project_id": "locknroll-eb153",
+    "storage_bucket": "locknroll-eb153.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944341956905:android:068e7688ec0d8760aa9f38",
+        "android_client_info": {
+          "package_name": "com.example.locknroll"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944341956905-osdod5hir4id75hc07a9qu6a01v24bjn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLWtTPv4pCzOT9KHZH36B5NLgjNXUhBeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944341956905-osdod5hir4id75hc07a9qu6a01v24bjn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
