@@ -1,37 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../utils/event_type.dart';
+import '../utils/event_type_map.dart';
+
 class LogModel {
   final String deviceID;
-  final bool wasEnabled;
-  final bool wasLocked;
-  final String wasImageCaptured;
-  final String wasAlarmActivated;
+  final EventType eventType;
   final DateTime dateOccured;
 
   LogModel({
     required this.deviceID,
-    required this.wasEnabled,
-    required this.wasLocked,
-    required this.wasImageCaptured,
-    required this.wasAlarmActivated,
+    required this.eventType,
     required this.dateOccured,
   });
 
   Map<String, dynamic> toMap() => {
         'deviceID': deviceID,
-        'wasEnabled': wasEnabled,
-        'wasLocked': wasLocked,
-        'wasImageCaptured': wasImageCaptured,
-        'wasAlarmActivated': wasAlarmActivated,
+        'eventType': eventType.toString().split('.').last,
         'dateOccured': dateOccured,
       };
 
   static LogModel fromMap(Map<String, dynamic> json) => LogModel(
         deviceID: json['deviceID'],
-        wasEnabled: json['wasEnabled'],
-        wasLocked: json['wasLocked'],
-        wasImageCaptured: json['wasImageCaptured'],
-        wasAlarmActivated: json['wasAlarmActivated'],
+        eventType: eventTypeMap(json['eventType']),
         dateOccured: (json['dateOccured'] as Timestamp).toDate(),
       );
 }

@@ -16,7 +16,8 @@ class ErrorMsg extends StatelessWidget {
     return Container(
       padding: Constants.defaultPadding,
       decoration: ShapeDecoration(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        shape: RoundedRectangleBorder(
+            borderRadius: Constants.defaultCircularRadius),
         color: ColorPalette.darkError,
       ),
       child: Text(msg, textAlign: TextAlign.center),

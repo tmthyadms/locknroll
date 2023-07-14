@@ -8,8 +8,8 @@ import '../../components/circular_progress.dart';
 import '../../components/error_msg.dart';
 import '../../components/gaps/hgap.dart';
 import '../../components/gaps/vgap.dart';
-import '../../components/navbar/current_index.dart';
 import '../../models/user_model.dart';
+import '../../providers/layout_primary_provider.dart';
 import '../../services/user_details_service.dart';
 import '../../theme/utils/color_palette.dart';
 import '../../utils/constants.dart';
@@ -26,7 +26,7 @@ class _AccountViewState extends State<AccountView> {
   final _auth = FirebaseAuth.instance;
 
   void signout() {
-    context.read<CurrentIndex>().currentIndex = 0;
+    context.read<LayoutPrimaryProvider>().currentIndex = 0;
     _auth.signOut();
   }
 
@@ -38,6 +38,7 @@ class _AccountViewState extends State<AccountView> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // Large gap
             const VGap.large(),
 
             // Build user
@@ -45,12 +46,13 @@ class _AccountViewState extends State<AccountView> {
               future: readUser(),
               builder: (context, snapshot) {
                 final userModel = snapshot.data;
+
                 if (snapshot.hasError) {
                   return ErrorMsg(msg: snapshot.toString());
                 } else if (snapshot.hasData) {
                   return userModel == null
                       ? Center(child: ErrorMsg(msg: snapshot.toString()))
-                      : buildUser(user: userModel);
+                      : buildUser(userModel);
                 } else {
                   return const CustomCircularProgress();
                 }
@@ -61,7 +63,7 @@ class _AccountViewState extends State<AccountView> {
         ));
   }
 
-  Widget buildUser({required UserModel user}) {
+  Widget buildUser(UserModel user) {
     final txtTheme = Theme.of(context).textTheme;
     final fullName = user.fullName;
     final dateRegistered = DateFormat.yMMMM().format(user.dateRegistered);
@@ -87,8 +89,7 @@ class _AccountViewState extends State<AccountView> {
               padding: Constants.defaultPadding,
               child: Column(
                 children: [
-                  UserDetailsTile(
-                      icon: Icons.email_outlined, title: 'Email', detail: email)
+                  UserDetailsTile(icon: Icons.email_outlined, detail: email)
                 ],
               ),
             )),

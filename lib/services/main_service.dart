@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'auth_service.dart';
-import '../views/layout_view.dart';
+import '../views/layout_primary_view.dart';
 
 class MainService extends StatefulWidget {
   const MainService({super.key});
@@ -17,8 +17,9 @@ class _MainServiceState extends State<MainService> {
     final auth = FirebaseAuth.instance;
 
     return StreamBuilder<User?>(
-        stream: auth.authStateChanges(),
-        builder: (context, snapshot) =>
-            snapshot.hasData ? const LayoutView() : const AuthService());
+      stream: auth.authStateChanges(),
+      builder: (context, snapshot) =>
+          (snapshot.hasData) ? const LayoutPrimaryView() : const AuthService(),
+    );
   }
 }

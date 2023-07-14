@@ -3,7 +3,8 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
 
 import '../../../components/circle_icon.dart';
-import '../../../components/navbar/current_index.dart';
+import '../../../providers/device_provider.dart';
+import '../../../providers/layout_secondary_provider.dart';
 import '../../../theme/utils/color_palette.dart';
 import '../../../utils/constants.dart';
 
@@ -11,12 +12,14 @@ class DeviceBtn extends StatefulWidget {
   final bool wasEnabled;
   final bool wasLocked;
   final String name;
+  final String deviceID;
 
   const DeviceBtn({
     super.key,
     required this.wasEnabled,
     required this.wasLocked,
     required this.name,
+    required this.deviceID,
   });
 
   @override
@@ -42,7 +45,11 @@ class _DeviceBtnState extends State<DeviceBtn> {
         borderRadius: BorderRadius.circular(15),
         child: Material(
           child: InkWell(
-            onTap: () => context.read<CurrentIndex>().currentIndex = 3,
+            onTap: () {
+              context.read<DeviceProvider>().currentDeviceID = widget.deviceID;
+              context.read<LayoutSecondaryProvider>().currentIndex = 0;
+              Navigator.pushNamed(context, '/layoutSecondary');
+            },
             child: Ink(
                 color: ColorPalette.secondary,
                 child: Container(

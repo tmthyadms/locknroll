@@ -6,7 +6,9 @@ import '../../components/circular_progress.dart';
 import '../../components/error_msg.dart';
 import '../../components/gaps/hgap.dart';
 import '../../components/gaps/vgap.dart';
+import '../../models/device_model.dart';
 import '../../models/user_model.dart';
+import '../../services/list_devices_service.dart';
 import '../../services/user_details_service.dart';
 import '../../utils/constants.dart';
 import 'components/add_device_btn.dart';
@@ -39,7 +41,7 @@ class _HomeViewState extends State<HomeView> {
               } else if (snapshot.hasData) {
                 return userModel == null
                     ? Center(child: ErrorMsg(msg: snapshot.toString()))
-                    : buildUser(user: userModel);
+                    : buildUser(userModel);
               } else {
                 return const CustomCircularProgress();
               }
@@ -76,17 +78,26 @@ class _HomeViewState extends State<HomeView> {
           const VGap.medium(),
           SizedBox(
             width: double.infinity,
-            child: Wrap(
-              runSpacing: 10,
-              alignment: WrapAlignment.spaceBetween,
-              // ignore: prefer_const_literals_to_create_immutables
-              children: [
-                const DeviceBtn(
-                    wasEnabled: true, wasLocked: true, name: 'Main entrance'),
-                const DeviceBtn(
-                    wasEnabled: false, wasLocked: false, name: 'Backyard door'),
-                const AddDeviceBtn()
-              ],
+            child: StreamBuilder<List<DeviceModel>>(
+              stream: readDevices(),
+              builder: (context, snapshot) {
+                final devices = snapshot.data;
+
+                if (snapshot.hasError) {
+                  return ErrorMsg(msg: snapshot.toString());
+                } else if (snapshot.hasData) {
+                  final devicesList = devices?.map(buildDevice).toList();
+                  devicesList?.add(const AddDeviceBtn());
+                  return devices == null
+                      ? Center(child: ErrorMsg(msg: snapshot.toString()))
+                      : Wrap(
+                          runSpacing: 10,
+                          alignment: WrapAlignment.spaceBetween,
+                          children: devicesList!);
+                } else {
+                  return const CustomCircularProgress();
+                }
+              },
             ),
           ),
           const VGap.large()
@@ -95,8 +106,16 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget buildUser({required UserModel user}) {
+  Widget buildUser(UserModel user) {
     return Text('Welcome, ${user.firstName}',
         style: Theme.of(context).textTheme.headlineMedium);
+  }
+
+  Widget buildDevice(DeviceModel device) {
+    return DeviceBtn(
+        wasEnabled: device.isEnabled,
+        wasLocked: device.isLocked,
+        name: device.name,
+        deviceID: device.deviceID);
   }
 }

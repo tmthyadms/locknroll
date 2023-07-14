@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/utils/color_palette.dart';
+
 class Constants {
   static const emailErrorMsg = 'E-mail must be filled.';
   static const passwErrorMsg = 'Password must be filled.';
@@ -8,6 +10,10 @@ class Constants {
 
   static EdgeInsets defaultPadding = const EdgeInsets.all(20);
   static EdgeInsets bodyPadding = const EdgeInsets.symmetric(horizontal: 25);
+
+  static BorderRadius defaultCircularRadius = BorderRadius.circular(15);
+
+  static BorderSide simpleBorder = BorderSide(color: ColorPalette.shadow);
 
   static Shadow simpleShadow = const Shadow(
     color: Colors.black26,

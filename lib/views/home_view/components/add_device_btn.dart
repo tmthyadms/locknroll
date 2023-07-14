@@ -13,18 +13,18 @@ class AddDeviceBtn extends StatelessWidget {
     return FractionallySizedBox(
         widthFactor: Constants.deviceListWidthFactor,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: Constants.defaultCircularRadius,
           child: Material(
             child: InkWell(
               onTap: () {},
               child: Ink(
                 decoration: ShapeDecoration(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        side: BorderSide(color: ColorPalette.shadow)),
+                        borderRadius: Constants.defaultCircularRadius,
+                        side: Constants.simpleBorder),
                     color: ColorPalette.background),
                 child: Container(
-                  height: 160,
+                  height: 200,
                   padding: Constants.defaultPadding,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

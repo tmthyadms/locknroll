@@ -7,7 +7,8 @@ final auth = FirebaseAuth.instance;
 final db = FirebaseFirestore.instance;
 
 Future<UserModel?> readUser() async {
-  final userDoc = db.collection('users').doc(auth.currentUser!.uid);
+  final currentUid = auth.currentUser!.uid;
+  final userDoc = db.collection('users').doc(currentUid);
   final userSnap = await userDoc.get();
 
   return UserModel.fromMap(userSnap.data()!);

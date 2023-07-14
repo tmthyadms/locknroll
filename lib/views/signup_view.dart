@@ -50,6 +50,7 @@ class _SignupViewState extends State<SignupView> {
           .createUserWithEmailAndPassword(email: email, password: passw)
           .then((value) async {
         final newUid = value.user!.uid;
+        final newUserDoc = _db.collection('users').doc(newUid);
         final newUser = UserModel(
             fullName: fullName,
             firstName: firstName,
@@ -57,7 +58,7 @@ class _SignupViewState extends State<SignupView> {
             email: email,
             dateRegistered: dateRegistered);
 
-        await _db.collection('users').doc(newUid).set(newUser.toMap());
+        newUserDoc.set(newUser.toMap());
       });
     } on FirebaseAuthException catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
