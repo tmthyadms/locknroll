@@ -1,5 +1,5 @@
 # LockNRoll
-A mobile app to control a custom-built smart door lock [^1].
+A mobile app to control a custom-built smart door lock using Firebase. [^1]
 [^1]: Developed for Bachelor's final year project and was exhibited during the MSU iRex 15.0 event.
 
 ## Mobile App
